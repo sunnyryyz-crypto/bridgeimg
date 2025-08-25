@@ -70,7 +70,7 @@ export default function App() {
   const [question, setQuestion] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/questions/1")
+    fetch("https://bridgeimg-backend.onrender.com/api/questions/1")
       .then((res) => res.json())
       .then((data) => setQuestion(data))
       .catch((err) => console.error(err));
