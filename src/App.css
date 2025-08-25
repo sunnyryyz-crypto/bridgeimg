@@ -1,0 +1,94 @@
+import React, { useState } from "react";
+
+// Sample question data structure
+const sampleQuestion = {
+  id: 101,
+  question:
+    "A 45-year-old man presents with epigastric pain that improves after eating. Endoscopy reveals a duodenal ulcer. Which of the following medications is most likely responsible for this condition?",
+  options: [
+    { id: "A", text: "Metformin" },
+    { id: "B", text: "Ibuprofen" },
+    { id: "C", text: "Lisinopril" },
+    { id: "D", text: "Atorvastatin" },
+  ],
+  correctAnswer: "B",
+  explanation:
+    "NSAIDs such as ibuprofen inhibit prostaglandin synthesis, impairing mucosal protection in the GI tract, which predisposes to peptic ulcers.",
+};
+
+function QuestionCard({ question }) {
+  const [selected, setSelected] = useState(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+
+  function handleSelect(optionId) {
+    if (!selected) {
+      setSelected(optionId);
+      setShowExplanation(true);
+    }
+  }
+
+  return (
+    <div className="question-card">
+      <h3>{question.question}</h3>
+      <div className="options">
+        {question.options.map((opt) => (
+          <button
+            key={opt.id}
+            className={`option-button ${
+              selected === opt.id
+                ? opt.id === question.correctAnswer
+                  ? "correct"
+                  : "incorrect"
+                : ""
+            }`}
+            onClick={() => handleSelect(opt.id)}
+            disabled={!!selected}
+          >
+            {opt.id}. {opt.text}
+          </button>
+        ))}
+      </div>
+      {showExplanation && (
+        <div className="explanation">
+          <strong>Explanation:</strong> {question.explanation}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function VideoSnippet() {
+  return (
+    <div className="video-snippet">
+      <h4>Video Snippet: Understanding Duodenal Ulcers</h4>
+      <iframe
+        width="400"
+        height="225"
+        src="https://www.youtube.com/embed/fakeVideoID"
+        title="Video explanation"
+        allowFullScreen
+      ></iframe>
+    </div>
+  );
+}
+
+function AIChat() {
+  return (
+    <div className="ai-chat">
+      <h4>AI Medical Assistant (Coming Soon)</h4>
+      <textarea placeholder="Ask your medical question..." disabled />
+      <button disabled>Send</button>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="app-container">
+      <h1>BridgeIMG Q-Bank Demo</h1>
+      <QuestionCard question={sampleQuestion} />
+      <VideoSnippet />
+      <AIChat />
+    </div>
+  );
+}
